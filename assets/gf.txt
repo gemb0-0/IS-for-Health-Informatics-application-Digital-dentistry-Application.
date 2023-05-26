@@ -1,0 +1,2 @@
+0 fractured
+1 nonfractured
