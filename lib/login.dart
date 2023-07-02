@@ -1,14 +1,18 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:io';
+import 'package:digital_dental/clinichistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:image_picker/image_picker.dart';
 import 'history.dart';
 import 'newscan.dart';
 import 'signup.dart';
-import 'package:flutter/services.dart' show rootBundle;
-
+import 'newscan.dart';
 class login extends StatefulWidget {
+  int? indiOrclinc;
+String? iddd;
+  login({required this.indiOrclinc, this.iddd});
+
   @override
   _loginState createState() => _loginState();
 }
@@ -72,28 +76,27 @@ void initstate(){
 
   loadModel() async {
     await Tflite.loadModel(
-     // model: "assets/jjj.tflite",
-      model: "assets/yosefmodel.tflite",
-     labels: "assets/jj.txt",
-     numThreads: 1,
+      model: "assets/model.tflite",
+      labels: "assets/label.txt",
+      numThreads: 1,
     );
   }
- late String modelresult;
+
+  late String modelresult;
 
   classifyImage(File image) async {
 //await    resizeImage(Image.file(_image!),20,20);
-    await Image(image: (_image != null) ? FileImage(_image!) as ImageProvider : AssetImage("assets/xxx.png"), width: 224, height: 224,);
+    // Image(image: (_image != null) ? FileImage(_image!) as ImageProvider : AssetImage("assets/xxx.png"), width: 15, height: 15,);
     var output = await Tflite.runModelOnImage(
         path: image.path,
-        imageStd: 255.0,  // defaults to 1.0
-
+        // imageStd: 255.0,  // defaults to 1.0
         asynch: true);
     setState(() {
       _loading = false;
       _outputs = output!;
-      print("a7a");
-      print(_outputs);
-      modelresult = _outputs[0]["label"];
+      modelresult = _outputs[0][
+          "label"]; //calculate how confident the model with the sample (confidence of the first item *index)
+      //print("a7a  $modelresult");
     });
   }
 
@@ -110,27 +113,24 @@ void initstate(){
       _loading = true;
       _image = File(image.path);
     });
-  // await resizeImage(_image as Image, 224, 224);
-  // print (_image);
-  await  classifyImage(_image!);
+
+    await classifyImage(_image!);
   }
-  Image resizeImage(Image image, double width, double height) {
+
+  /*Image resizeImage(Image image, double width, double height) {
     return Image(
       image: image.image,
       width: width,
       height: height,
       fit: BoxFit.cover,
     );
-  }
+  } */
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: Text('digital dentistry'),
         ),
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-
-
 /*
           _loading
               ? Container(
@@ -159,7 +159,6 @@ void initstate(){
                 ),
           */
 
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -169,9 +168,23 @@ void initstate(){
 
                   if (doc == 1) {
                     // ignore: use_build_context_synchronously
-                       Navigator.push(context,MaterialPageRoute(builder: (context) => newscan(ggg: _image,modelresult: modelresult,),));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => newscan(
+                            ggg: _image,
+                            modelresult: modelresult,
+                          ),
+                        ));
                   } else if (doc == 2) {
-                    Navigator.push(context,MaterialPageRoute(builder: (context) => newscan(ggg: _image,modelresult: modelresult,),));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => newscan(
+                            ggg: _image,
+                            modelresult: modelresult,
+                          ),
+                        ));
 
                     //  results(qq: gg,)));
                     // fetch data from the cloud
@@ -193,8 +206,16 @@ void initstate(){
               ),
               ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => history()));
+                  if (widget.indiOrclinc == 2) {
+                    //clinc 1 ndividual 2
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => history()));
+                  } else if (widget.indiOrclinc == 1) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => clinichistory(iid: widget.iddd,)));
+                  }
                 },
                 icon: Icon(Icons.history, size: 33),
                 label: Text(

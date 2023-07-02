@@ -5,9 +5,20 @@ import 'package:flutter/widgets.dart';
 import 'signup.dart';
 import 'login.dart';
 import 'themain.dart';
+import 'dart:io';
 
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
+void main()  {
+  HttpOverrides.global = MyHttpOverrides();
 
-void main() => runApp(MyApp());
+runApp(MyApp());
+}
 
 
 class MyApp extends StatelessWidget {

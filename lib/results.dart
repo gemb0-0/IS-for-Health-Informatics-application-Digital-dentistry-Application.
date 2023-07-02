@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'login.dart';
 class results extends StatefulWidget {
-  String pname, pmail, age, number, dname,mr;
-
+  String pname, pmail,age, dname, number,mr;
+ // int age;
   File? qq;
 
 //  results({required this.qq});
@@ -67,14 +67,8 @@ class _resultsState extends State<results> {
                 '  phone number :  ${widget.number} \n',
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
-              Text(
-                '  age : ${widget.age} \n',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                '  doctor name : ${widget.dname} \n',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              ),
+              Text('  age : ${widget.age} \n', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
+              Text('  doctor name : ${widget.dname} \n', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
               Text(
                 ' results : ${widget.mr}',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
