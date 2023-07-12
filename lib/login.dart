@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:io';
-import 'package:digital_dental/clinichistory.dart';
+//import 'package:digital_dental/clinichistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:image_picker/image_picker.dart';
@@ -211,11 +211,8 @@ void initstate(){
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => history()));
                   } else if (widget.indiOrclinc == 1) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => clinichistory(iid: widget.iddd,)));
-                  }
+                   // Navigator.push(context, MaterialPageRoute(builder: (context) => clinichistory(iid: widget.iddd,)));
+    }
                 },
                 icon: Icon(Icons.history, size: 33),
                 label: Text(
